@@ -1,0 +1,48 @@
+package praktika21;
+
+public class Main {
+    public static void main(String[] args) {
+        ConcreteFactory factory = new ConcreteFactory();
+        //factory.CreateComplex(2, 3);
+        System.out.println(factory.CreateComplex(2, 3));
+    }
+}
+package praktika21;
+
+public interface ComplexAbstractFactory {
+    public Complex createComplex();
+    public Complex CreateComplex(int real, int image);
+}
+package praktika21;
+
+public class ConcreteFactory implements ComplexAbstractFactory {
+    @Override
+    public Complex createComplex() {
+        return new Complex();
+    }
+
+    @Override
+    public Complex CreateComplex(int real, int image) {
+        return new Complex(real, image);
+    }
+}
+package praktika21;
+
+public class Complex {
+    private int image;
+    private int real;
+
+    public Complex(){
+        real=0;
+        image=0;
+    }
+    public Complex(int real, int image) {
+        this.real = real;
+        this.image = image;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d+(%d)i", real, image);
+    }
+}
