@@ -1,0 +1,208 @@
+package Java_task_26.ex3;
+
+
+public class Add extends Operator {
+    public Add(Operand left, Operand right) {
+        super(left, right);
+    }
+
+    public Add(Operand left, Variable vRight) {
+        super(left, vRight);
+    }
+
+    public Add(Variable vLeft, Variable vRight) {
+        super(vLeft, vRight);
+    }
+
+    public Add(Variable vLeft, Operand right) {
+        super(vLeft, right);
+    }
+
+    @Override
+    public double getValue() {
+        return left.getValue() + right.getValue();
+    }
+}
+package Java_task_26.ex3;
+
+public class Const extends Operand {
+    public Const(double value){
+        this.value = value;
+    }
+}
+package Java_task_26.ex3;
+
+
+public class Divide extends Operator {
+    public Divide(Operand left, Variable vRight) {
+        super(left, vRight);
+    }
+
+    public Divide(Variable vLeft, Variable vRight) {
+        super(vLeft, vRight);
+    }
+
+    public Divide(Variable vLeft, Operand right) {
+        super(vLeft, right);
+    }
+
+    public Divide(Operand left, Operand right) {
+        super(left, right);
+    }
+
+    @Override
+    public double getValue() {
+        return left.getValue() / right.getValue();
+    }
+}
+package Java_task_26.ex3;
+
+
+public class Multiply extends Operator {
+    public Multiply(Operand left, Operand right) {
+        super(left, right);
+    }
+
+    public Multiply(Operand left, Variable vRight) {
+        super(left, vRight);
+    }
+
+    public Multiply(Variable vLeft, Variable vRight) {
+        super(vLeft, vRight);
+    }
+
+    public Multiply(Variable vLeft, Operand right) {
+        super(vLeft, right);
+    }
+
+    @Override
+    public double getValue() {
+        return left.getValue() * right.getValue();
+    }
+}
+package Java_task_26.ex3;
+
+public abstract class Operand {
+    protected double value;
+
+    public double getValue() {
+        return value;
+    }
+}
+package Java_task_26.ex3;
+
+public abstract class Operator extends Operand{
+    protected Operand left, right;
+    protected Variable vLeft, vRight;
+    public Operator(Operand left, Operand right){
+        this.left = left;
+        this.right = right;
+    }
+
+    public Operator(Operand left, Variable vRight) {
+        this.left = left;
+        this.vRight = vRight;
+    }
+
+    public Operator(Variable vLeft, Variable vRight) {
+        this.vLeft = vLeft;
+        this.vRight = vRight;
+    }
+    public Operator (Variable vLeft, Operand right){
+        this.vLeft = vLeft;
+        this.right = right;
+    }
+
+    @Override
+    public abstract double getValue();
+
+    public double evaluate(double v){
+        if(right == null) right = vRight.toConst(v);
+        if(left == null) left = vLeft.toConst(v);
+        if(left instanceof Operator) ((Operator) left).evaluate(v);
+        if(right instanceof Operator)((Operator) right).evaluate(v);
+        return getValue();
+    }
+}
+package Java_task_26.ex3;
+
+
+public class Subtract extends Operator {
+    public Subtract(Operand left, Operand right) {
+        super(left, right);
+    }
+
+    public Subtract(Operand left, Variable vRight) {
+        super(left, vRight);
+    }
+
+    public Subtract(Variable vLeft, Variable vRight) {
+        super(vLeft, vRight);
+    }
+
+    public Subtract(Variable vLeft, Operand right) {
+        super(vLeft, right);
+    }
+
+    @Override
+    public double getValue() {
+        return left.getValue() - right.getValue();
+    }
+}
+package Java_task_26.ex3;
+
+import java.util.Scanner;
+
+public class Tester {
+    public static void main(String[] args) {
+        System.out.println(
+                new Subtract(
+                        new Multiply(
+                                new Const(2),
+                                new Variable("x")
+                        ),
+                        new Const(3)
+                ).evaluate(5)
+        );
+
+        Scanner sc = new Scanner(System.in);
+        double v = sc.nextDouble();
+
+        System.out.println(
+                new Add(
+                        new Subtract(
+                                new Variable("x", 2),
+                                new Multiply(
+                                        new Const(2),
+                                        new Variable("x")
+                                )
+                        ),
+                        new Const(1)
+                ).evaluate(v)
+        );
+    }
+}
+package Java_task_26.ex3;
+
+public class Variable {
+    private String name;
+    private int pow;
+
+    public Variable(String name){
+        this.name = name;
+        pow = 1;
+    }
+
+    public Variable(String name, int pow) {
+        this.name = name;
+        this.pow = pow;
+    }
+
+    public Const toConst(double v){
+        return new Const(Math.pow(v, pow));
+    }
+
+    public String getName() {
+        return name;
+    }
+}
