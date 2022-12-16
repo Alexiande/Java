@@ -1,0 +1,136 @@
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class Student {
+
+    private int idNumber;
+
+    private int totalPoints;
+
+    private Calendar birthdayDate;
+
+    Student(int idNumber, int totalPoints, int dayBirthday, int mouthBirthday, int yearBirthday) {
+        this.idNumber = idNumber;
+        this.totalPoints = totalPoints;
+        this.birthdayDate = Calendar.getInstance();
+        this.birthdayDate.set(Calendar.DAY_OF_MONTH,dayBirthday);
+        this.birthdayDate.set(Calendar.MONTH,mouthBirthday-1);
+        this.birthdayDate.set(Calendar.YEAR,yearBirthday);
+    }
+
+    Student(int idNumber, int dayBirthday, int mouthBirthday, int yearBirthday) {
+       this(idNumber, 0, dayBirthday, mouthBirthday, yearBirthday);
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
+        return sdf.format(this.birthdayDate.getTime());
+    }
+
+    public int getTotalPoints() {
+        return totalPoints;
+    }
+
+    public int getIdNumber() {
+        return idNumber;
+    }
+}
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class Task1 {
+
+    /**
+     * Написать программу, выводящую фамилию разработчика, дату и время получения задания, а также дату и время сдачи задания. Для получения
+     * последней даты и времени использовать класс Date из пакета java.util.*
+     * (Объявление Dated=newDate() или метод System.currentTimeMillis().
+     */
+    public static void main(String[] args) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
+        Calendar calGetTask = Calendar.getInstance();
+        calGetTask.set(Calendar.YEAR,2022);
+        calGetTask.set(Calendar.MONTH,Calendar.SEPTEMBER);
+        calGetTask.set(Calendar.DAY_OF_MONTH,15);
+        calGetTask.set(Calendar.HOUR,9);
+        calGetTask.set(Calendar.MINUTE,2);
+        Calendar calCur = Calendar.getInstance();
+        System.out.print("Агафонов, задание получено: " + sdf.format(calGetTask.getTime()) + ", задание сдано: "+sdf.format(calCur.getTime()));
+    }
+
+
+}
+import java.util.Calendar;
+import java.util.Scanner;
+
+public class Task2 {
+
+
+    /**
+     * Приложение, сравнивающее текущую дату и дату, введенную
+     * пользователем c текущим системным временем
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.print("Введите день: ");
+        Scanner input = new Scanner(System.in);
+        int inputDay = input.nextInt();
+        System.out.print("Введите месяц(число): ");
+        int inputMonth = input.nextInt();
+        System.out.print("Введите месяц(год): ");
+        assert inputMonth < 1 || inputMonth > 12;
+        int inputYear = input.nextInt();
+        Calendar inputCal = Calendar.getInstance();
+        inputCal.set(Calendar.YEAR,inputYear);
+        inputCal.set(Calendar.MONTH,inputMonth-1);
+        inputCal.set(Calendar.DAY_OF_MONTH,inputDay);
+        inputCal.set(Calendar.HOUR_OF_DAY, 0);
+        inputCal.set(Calendar.MINUTE, 0);
+        inputCal.set(Calendar.SECOND, 0);
+        inputCal.set(Calendar.MILLISECOND, 0);
+
+        Calendar calCur = Calendar.getInstance();
+        calCur.set(Calendar.HOUR_OF_DAY, 0);
+        calCur.set(Calendar.MINUTE, 0);
+        calCur.set(Calendar.SECOND, 0);
+        calCur.set(Calendar.MILLISECOND, 0);
+        if(inputCal.equals(calCur)) {
+            System.out.print("Даты сходятся");
+        } else {
+            System.out.print("Даты разные");
+        }
+    }
+
+}
+public class Task3 {
+
+    /**
+     * Доработайте класс Student предусмотрите поле для хранения даты
+     * рождения, перепишите метод toString() таким образом, чтобы он разработайте
+     * метод, возвращал строковое представление даты рождения по вводимому в
+     * метод формату даты (например, короткий, средний и полный формат даты).
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println(new Student((int) (Math.random() * 300), 17, 1, 2001));
+    }
+
+}
+
+public class Task4 {
+
+    /**
+     *Напишите пользовательский код, который формирует объекты Date и
+     *Calendar по следующим данным, вводимым пользователем:
+     *<Год><Месяц><Число>
+     *<Часы1><минуты>
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+
+
+    }
+
+}
